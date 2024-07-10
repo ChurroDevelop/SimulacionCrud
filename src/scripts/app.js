@@ -1,6 +1,7 @@
 import { documentos, persona } from "./documentos.js";
 
 // TODO --- Capturar a todos por id de los input, capturar el formulario, y crear un fragmento para el select del tipo de documento
+const identificador = document.querySelector("#identificador");
 const name = document.querySelector("#nombre");
 const apellido = document.querySelector("#apellido");
 const numeroDoc = document.querySelector("#numeroDoc");
@@ -8,6 +9,7 @@ const correo = document.querySelector("#correo");
 const direccion = document.querySelector("#direccion");
 const select = document.querySelector("#select");
 const formulario = document.querySelector("#formulario");
+const btnForm = document.querySelector("#btnForm");
 const mostrarUser = document.querySelector("#mostrarUsers");
 const fragmentoSelect = document.createDocumentFragment();
 // -------------------------------------------------------------
@@ -47,6 +49,7 @@ function validar(){
   numeroDoc.setAttribute("onkeypress", "return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode === 8 || event.charCode === 9 || event.charCode === 13 )");
 }
 // -------------------------------------------------------------
+
 
 
 // Funcion para enviar el formulario y se le pasa el preventDefault para que no se refresque la pagina
@@ -153,50 +156,56 @@ function enviar(event){
     correo.classList.remove("border-green-500", "border-4");
 
     // Enviar el usuario que se esta seteando
-    const send = {
-      id: Math.floor(Math.random() * 100),
-      nombre: name.value,
-      apellido: apellido.value,
-      documento: parseInt(numeroDoc.value),
-      tipo_documento: select.value,
-      correo: correo.value,
-      direccion: direccion.value
-    }
-    // --------------------------------------
     
-    // Opciones para poder manejar el metodo a utilizar
-    const opciones = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(send)
+    if (identificador.value.trim() === '') {
+      const send = {
+        id: Math.floor(Math.random() * 100).toString(),
+        nombre: name.value,
+        apellido: apellido.value,
+        documento: parseInt(numeroDoc.value),
+        tipo_documento: select.value,
+        correo: correo.value,
+        direccion: direccion.value
+      }
+      // --------------------------------------
+      
+      // Opciones para poder manejar el metodo a utilizar
+      const opciones = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(send)
+      }
+      // -------------------------------------------------
+  
+      // TODO --- Peticion al servidor y realizar metodo post del nuevo usuario 
+      fetch("http://localhost:3000/users", opciones)
+        .then((r) => {
+          if(!r.ok){ 
+            throw Error(r.status);
+          }
+          return r.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((e) => {
+          console.log(e)
+        });
+      // --------------------------------------------------
+  
+      // luego de enviado el formulario se setea todo a vacio de una vez
+      name.value = "";
+      apellido.value = "";
+      numeroDoc.value = "";
+      correo.value = "";
+      direccion.value = "";
+      select.value = "";
     }
-    // -------------------------------------------------
-
-    // TODO --- Peticion al servidor y realizar metodo post del nuevo usuario 
-    fetch("http://localhost:3000/users", opciones)
-      .then((r) => {
-        if(!r.ok){ 
-          throw Error(r.status);
-        }
-        return r.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((e) => {
-        console.log(e)
-      });
-    // --------------------------------------------------
-
-    // luego de enviado el formulario se setea todo a vacio de una vez
-    name.value = "";
-    apellido.value = "";
-    numeroDoc.value = "";
-    correo.value = "";
-    direccion.value = "";
-    select.value = "";
+    else{
+      modificar();
+    }
   }
 }
 // ------------------------------------------------------------------------------
@@ -207,6 +216,59 @@ function mostrar() {
   containerTable.classList.toggle("hidden");
 }
 // -----------------------------------------------------------
+
+function eliminarUser(id){
+  fetch(`http://localhost:3000/users/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+function modificar(event){
+
+  let data = {
+      id: identificador.value,
+      nombre: name.value,
+      apellido: apellido.value,
+      documento: parseInt(numeroDoc.value),
+      tipo_documento: select.value,
+      correo: correo.value,
+      direccion: direccion.value
+  }
+
+  fetch(`http://localhost:3000/users/${identificador.value}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": 'aplication/json; charset=UTF-8'
+    }
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((i) => {
+      console.log(i)
+    })
+}
+
+function modificarUser(id){
+  console.log(id)
+  fetch(`http://localhost:3000/users/${id}`)
+    .then((u) => {
+      return u.json();
+    })
+    .then((user) => {
+      name.value = user.nombre;
+      apellido.value = user.apellido;
+      numeroDoc.value = user.documento;
+      correo.value = user.correo;
+      direccion.value = user.direccion;
+      select.value = user.tipo_documento;
+      identificador.value = id;
+      btnForm.innerText = "Modificar usuario";
+    })
+}
+
+
 
 // TODO --- Metodo para listar los usuarios en la tabla
 persona()
@@ -222,8 +284,7 @@ persona()
     let td6 = document.createElement("td");
     let td7 = document.createElement("td");
     let btn = document.createElement("button");
-    let formDelete = document.createElement("form");
-    let inputDelete = document.createElement("input");
+    let btnModify = document.createElement("button");
     td.textContent = u.id;
     td1.textContent = u.nombre;
     td2.textContent = u.apellido;
@@ -232,19 +293,19 @@ persona()
     td5.textContent = u.correo;
     td6.textContent = u.direccion;
 
-    formDelete.setAttribute("id", "eliminarUser");
-    inputDelete.setAttribute("id", "inputDelete");
-    inputDelete.setAttribute("value", u.id);
-    inputDelete.setAttribute("type", "hidden");
+    btnModify.textContent = "Modificar";
+    btnModify.classList.add("btnModificar");
+    btnModify.setAttribute("data-id", u.id);
 
     btn.innerText = "Eliminar";
-    btn.setAttribute("id", "btnEliminar");
     btn.setAttribute("type", "submit");
-    
-    formDelete.appendChild(inputDelete);
-    formDelete.appendChild(btn);
+    btn.classList.add("btnEliminar");
 
-    td7.appendChild(formDelete);
+    btn.setAttribute("data-id", u.id);
+
+    td7.appendChild(btn);
+    td7.appendChild(btnModify);
+    td7.classList.add("flex", "gap-2", "h-full", "flex-col");
 
     tr.appendChild(td);
     tr.appendChild(td1);
@@ -257,9 +318,26 @@ persona()
     fragementoTable.appendChild(tr);
   })
   tabla.appendChild(fragementoTable);
+  addEventBtn();
+  addEventModify();
 });
 // ----------------------------------------------
 
+function addEventBtn() {
+  let x = document.querySelectorAll(".btnEliminar");
+  x.forEach(button => {
+    let ident = button.getAttribute("data-id");
+    button.addEventListener("click", ()=> eliminarUser(ident));
+  })
+}
+
+function addEventModify(){
+  let y = document.querySelectorAll(".btnModificar");
+  y.forEach((e) => {
+      let identi = e.getAttribute("data-id");
+      e.addEventListener("click",() => modificarUser(identi))
+    })
+  }
 
 // TODO --- Eventos para manejar el DOM
 name.addEventListener("keydown", validar); // Evento para validar que se ingresen letras y no numeros

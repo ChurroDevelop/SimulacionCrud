@@ -1,0 +1,58 @@
+{
+  "users": [
+    {
+      "id": "95",
+      "nombre": "Jhon",
+      "apellido": "Pinto",
+      "documento": 1099737501,
+      "tipo_documento": "Tarjeta de identidad",
+      "correo": "kfdmk@",
+      "direccion": "jsijdsk"
+    },
+    {
+      "id": "34",
+      "nombre": "Julian",
+      "apellido": "Pinto",
+      "documento": 1099737501,
+      "tipo_documento": "Tarjeta de identidad",
+      "correo": "kfdmk@",
+      "direccion": "jsijdsk"
+    },
+    {
+      "id": "78",
+      "nombre": "",
+      "apellido": "",
+      "documento": null,
+      "tipo_documento": "",
+      "correo": "",
+      "direccion": ""
+    },
+    {
+      "id": "99",
+      "nombre": "Cacharrita",
+      "apellido": "Silva",
+      "documento": 109,
+      "tipo_documento": "Cédula de ciudadanía",
+      "correo": "kfdmk@",
+      "direccion": "jsijdsk"
+    }
+  ],
+  "docs": [
+    {
+      "id": "1",
+      "tipo_documento": "Cédula de ciudadanía"
+    },
+    {
+      "id": "2",
+      "tipo_documento": "Tarjeta de identidad"
+    },
+    {
+      "id": "3",
+      "tipo_documento": "Registro civil"
+    },
+    {
+      "id": "4",
+      "tipo_documento": "Cédula de extranjería"
+    }
+  ]
+}

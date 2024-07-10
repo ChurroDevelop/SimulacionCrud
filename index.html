@@ -23,6 +23,7 @@
         <div class="w-full flex flex-col gap-2">
           <form action="#" class="flex flex-col gap-2 w-full items-center justify-center" id="formulario">
             <div class="flex flex-col gap-2 w-full">
+              <input type="hidden" id="identificador">
               <input type="text" id="nombre" placeholder="Ingrese su nombre" class="input input-bordered w-full bg-meInputs text-black" />
               <input type="text" id="apellido" placeholder="Ingrese su apellido" class="input input-bordered w-full bg-meInputs text-black" />
               <input type="text" id="numeroDoc" placeholder="Ingrese su numero de documento" class="input input-bordered w-full bg-meInputs text-black" />
@@ -35,7 +36,7 @@
               </select>
             </div>
             <div class="w-full flex">
-              <button type="submit" class="btn bg-meInputs btn-sm text-black border-none hover:text-meWhite w-full">
+              <button type="submit" class="btn bg-meInputs btn-sm text-black border-none hover:text-meWhite w-full" id="btnForm">
                 Enviar datos al servidor
               </button>
             </div>
@@ -52,7 +53,7 @@
           <table class="table table-zebra bg-base-100 hidden" id="containerTable">
             <!-- head -->
             <thead>
-              <tr data-user-id="">
+              <tr>
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
@@ -60,6 +61,7 @@
                 <th>Tipo de documento</th>
                 <th>Correo Electronico</th>
                 <th>Direccion</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody id="listar">
