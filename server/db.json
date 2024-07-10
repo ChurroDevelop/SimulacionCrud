@@ -1,40 +1,31 @@
 {
   "users": [
     {
-      "id": "95",
-      "nombre": "Jhon",
-      "apellido": "Pinto",
-      "documento": 1099737501,
-      "tipo_documento": "Tarjeta de identidad",
-      "correo": "kfdmk@",
-      "direccion": "jsijdsk"
-    },
-    {
-      "id": "34",
-      "nombre": "Julian",
-      "apellido": "Pinto",
-      "documento": 1099737501,
-      "tipo_documento": "Tarjeta de identidad",
-      "correo": "kfdmk@",
-      "direccion": "jsijdsk"
-    },
-    {
-      "id": "78",
-      "nombre": "",
-      "apellido": "",
-      "documento": null,
-      "tipo_documento": "",
-      "correo": "",
-      "direccion": ""
-    },
-    {
-      "id": "99",
+      "id": "21",
       "nombre": "Cacharrita",
-      "apellido": "Silva",
-      "documento": 109,
-      "tipo_documento": "Cédula de ciudadanía",
+      "apellido": "Pinto",
+      "documento": 1099737501,
+      "tipo_documento": "Cédula de extranjería",
       "correo": "kfdmk@",
-      "direccion": "jsijdsk"
+      "direccion": "fjidfkd"
+    },
+    {
+      "id": "45",
+      "nombre": "Cacharrita",
+      "apellido": "Gomez",
+      "documento": 1099737501,
+      "tipo_documento": "Cédula de extranjería",
+      "correo": "jfkdj@gmail.com",
+      "direccion": "eeeeeeeeeeee"
+    },
+    {
+      "id": "25",
+      "nombre": "Cacharrita",
+      "apellido": "Gomez",
+      "documento": 1099737501,
+      "tipo_documento": "Tarjeta de identidad",
+      "correo": "kfdmk@",
+      "direccion": "fdfd"
     }
   ],
   "docs": [

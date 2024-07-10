@@ -1,4 +1,4 @@
-import { documentos, persona } from "./documentos.js";
+import { documentos, persona, eliminarUser } from "./documentos.js";
 
 // TODO --- Capturar a todos por id de los input, capturar el formulario, y crear un fragmento para el select del tipo de documento
 const identificador = document.querySelector("#identificador");
@@ -51,9 +51,8 @@ function validar(){
 // -------------------------------------------------------------
 
 
-
 // Funcion para enviar el formulario y se le pasa el preventDefault para que no se refresque la pagina
-function enviar(event){
+let enviar =  async (event) => {
 
   // Variable para controlar si el formulario es valido
   let formValido = true;
@@ -144,7 +143,7 @@ function enviar(event){
     event.preventDefault();
   }
   else{
-    event.preventDefault();
+    // event.preventDefault();
     console.log("Se mando el formulario");
 
     // Remover todas las clases para nuevo envio
@@ -180,7 +179,7 @@ function enviar(event){
       // -------------------------------------------------
   
       // TODO --- Peticion al servidor y realizar metodo post del nuevo usuario 
-      fetch("http://localhost:3000/users", opciones)
+      await fetch("http://localhost:3000/users", opciones)
         .then((r) => {
           if(!r.ok){ 
             throw Error(r.status);
@@ -217,11 +216,6 @@ function mostrar() {
 }
 // -----------------------------------------------------------
 
-function eliminarUser(id){
-  fetch(`http://localhost:3000/users/${id}`, {
-    method: 'DELETE',
-  });
-}
 
 function modificar(event){
 
@@ -267,7 +261,6 @@ function modificarUser(id){
       btnForm.innerText = "Modificar usuario";
     })
 }
-
 
 
 // TODO --- Metodo para listar los usuarios en la tabla

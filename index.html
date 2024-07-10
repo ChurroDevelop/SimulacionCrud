@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="src/scripts/tailwind.js"></script>
 </head>
+
 <body class="bg-meWhite min-h-screen flex flex-col justify-around items-center">
   <main class="w-screen bg-meWhite h-full">
     <section class="w-full h-full flex flex-col gap-8 justify-center items-center">
@@ -21,7 +23,7 @@
           </h1>
         </div>
         <div class="w-full flex flex-col gap-2">
-          <form action="#" class="flex flex-col gap-2 w-full items-center justify-center" id="formulario">
+          <form class="flex flex-col gap-2 w-full items-center justify-center" id="formulario">
             <div class="flex flex-col gap-2 w-full">
               <input type="hidden" id="identificador">
               <input type="text" id="nombre" placeholder="Ingrese su nombre" class="input input-bordered w-full bg-meInputs text-black" />
@@ -42,7 +44,7 @@
             </div>
           </form>
           <button class="w-full p-2 bg-meWhite text-black btn border-none btn-sm hover:text-meWhite" id="mostrarUsers">
-            <a href="">Listar usuarios</a>
+            Listar usuarios
           </button>
         </div>
       </article>
@@ -51,7 +53,6 @@
       <article class="w-full flex justify-center items-center flex-col my-2">
         <div class="overflow-x-auto w-8/12">
           <table class="table table-zebra bg-base-100 hidden" id="containerTable">
-            <!-- head -->
             <thead>
               <tr>
                 <th>Id</th>

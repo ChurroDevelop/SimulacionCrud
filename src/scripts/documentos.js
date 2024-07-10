@@ -11,3 +11,9 @@ export const persona = async () => {
   let response = await request.json();
   return response;
 }
+
+export const eliminarUser = (id) => {
+  fetch(`http://localhost:3000/users/${id}`, {
+    method: 'DELETE',
+  });
+}
