@@ -208,7 +208,6 @@ function mostrar() {
 }
 // -----------------------------------------------------------
 
-
 // TODO --- Metodo para listar los usuarios en la tabla
 persona()
 .then((user) => {
@@ -223,6 +222,8 @@ persona()
     let td6 = document.createElement("td");
     let td7 = document.createElement("td");
     let btn = document.createElement("button");
+    let formDelete = document.createElement("form");
+    let inputDelete = document.createElement("input");
     td.textContent = u.id;
     td1.textContent = u.nombre;
     td2.textContent = u.apellido;
@@ -230,9 +231,21 @@ persona()
     td4.textContent = u.tipo_documento;
     td5.textContent = u.correo;
     td6.textContent = u.direccion;
-    btn.textContent = "Eliminar";
+
+    formDelete.setAttribute("id", "eliminarUser");
+    inputDelete.setAttribute("id", "inputDelete");
+    inputDelete.setAttribute("value", u.id);
+    inputDelete.setAttribute("type", "hidden");
+
+    btn.innerText = "Eliminar";
     btn.setAttribute("id", "btnEliminar");
-    td7.appendChild(btn);
+    btn.setAttribute("type", "submit");
+    
+    formDelete.appendChild(inputDelete);
+    formDelete.appendChild(btn);
+
+    td7.appendChild(formDelete);
+
     tr.appendChild(td);
     tr.appendChild(td1);
     tr.appendChild(td2);
@@ -240,12 +253,13 @@ persona()
     tr.appendChild(td4);
     tr.appendChild(td5);
     tr.appendChild(td6);
-    tr.appendChild(td7)
+    tr.appendChild(td7);
     fragementoTable.appendChild(tr);
   })
-  tabla.appendChild(fragementoTable)
+  tabla.appendChild(fragementoTable);
 });
 // ----------------------------------------------
+
 
 // TODO --- Eventos para manejar el DOM
 name.addEventListener("keydown", validar); // Evento para validar que se ingresen letras y no numeros
