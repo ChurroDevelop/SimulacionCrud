@@ -1,4 +1,4 @@
-import { documentos, persona, eliminarUser } from "./documentos.js";
+import { documentos, persona, eliminarUser, crearSpans } from "./modulo.js";
 
 // TODO --- Capturar a todos por id de los input, capturar el formulario, y crear un fragmento para el select del tipo de documento
 const identificador = document.querySelector("#identificador");
@@ -8,8 +8,10 @@ const numeroDoc = document.querySelector("#numeroDoc");
 const correo = document.querySelector("#correo");
 const direccion = document.querySelector("#direccion");
 const select = document.querySelector("#select");
+const telefono = document.querySelector("#telefono");
 const formulario = document.querySelector("#formulario");
 const btnForm = document.querySelector("#btnForm");
+const check = document.querySelector("#check");
 const mostrarUser = document.querySelector("#mostrarUsers");
 const fragmentoSelect = document.createDocumentFragment();
 // -------------------------------------------------------------
@@ -20,9 +22,8 @@ const containerTable = document.querySelector("#containerTable");
 const fragementoTable = document.createDocumentFragment();
 // -------------------------------------------------------------
 
-// Expresion regular para validar que el correo contenga arrobas
-const regex = /@/;
-
+// Expresion regular para validar que el correo contenga arrobas y tenga el .com
+const regex = /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com\b$/;
 
 // TODO --- Se hace el recorrido para poder extraer la cantidad de documentos que existen
 documentos()
@@ -39,17 +40,16 @@ documentos()
   });
 // -------------------------------------------------------
 
-
-// TODO --- Funcion para validar que no se puedan escribir ciertos caracteres
-function validar(){
-  name.setAttribute("onkeypress", "return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode === 32 || event.charCode === 8 || event.charCode === 9 || event.charCode === 13)");
-  apellido.setAttribute("onkeypress", "return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode === 32 || event.charCode === 8 || event.charCode === 9 || event.charCode === 13)");
-  correo.setAttribute("onkeypress", "return ((event.charCode >= 0 && event.charCode <= 255))");
-  direccion.setAttribute("onkeypress" , "return ((event.charCode >= 0 && event.charCode <= 255))");
-  numeroDoc.setAttribute("onkeypress", "return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode === 8 || event.charCode === 9 || event.charCode === 13 )");
+// Funcion para saber si el checkbox esta checkeado o no
+let checkeado = () => {
+  if (check.checked) {
+    btnForm.removeAttribute("disabled");
+    console.log("Esta validado");
+  } else {
+    btnForm.setAttribute("disabled", "");
+    console.log("no esta chekead");
+  }
 }
-// -------------------------------------------------------------
-
 
 // Funcion para enviar el formulario y se le pasa el preventDefault para que no se refresque la pagina
 let enviar =  async (event) => {
@@ -59,25 +59,26 @@ let enviar =  async (event) => {
 
   // Validacion del nombre si no esta vacio
   if (name.value.trim() === '') {
-    console.log("El nombre es obligatorio");
     name.classList.remove("border-green-500");
-    name.classList.add("border-red-500", "border-4");
+    name.classList.add("border-red-500", "border-2");
+    name.insertAdjacentElement("afterend", crearSpans("El nombre es obligatorio"));
     formValido = false
   }
   else {
     name.classList.remove("border-red-500");
-    name.classList.add("border-green-500", "border-4");
+    name.classList.add("border-green-500", "border-2");
   }
 
   // Validacion del apellido si no esta vacio
   if (apellido.value.trim() === '') {
     console.log("El Apellido es obligatorio");
     apellido.classList.remove("border-green-500");
-    apellido.classList.add("border-red-500", "border-4");
+    apellido.classList.add("border-red-500", "border-2");
+    apellido.insertAdjacentElement("afterend", crearSpans("El apellido es obligatorio"));
     formValido = false;
   }
   else{
-    apellido.classList.add("border-green-500", "border-4");
+    apellido.classList.add("border-green-500", "border-2");
     apellido.classList.remove("border-red-500");
   }
 
@@ -85,19 +86,20 @@ let enviar =  async (event) => {
   if (correo.value.trim() === '') {
     console.log("El correo es obligatorio");
     correo.classList.remove("border-green-500");
-    correo.classList.add("border-red-500", "border-4");
+    correo.classList.add("border-red-500", "border-2");
+    correo.insertAdjacentElement("afterend", crearSpans("El correo es obligatorio"));
     formValido = false;
   }
   else{
     if (!regex.test(correo.value)) {
       console.log("El correo debe llevar una arroba");
       correo.classList.remove("border-green-500");
-      correo.classList.add("border-red-500", "border-4");
+      correo.insertAdjacentElement("afterend", crearSpans("El correo debe contener @ y .com"));
       formValido = false;
     }
     else{
       correo.classList.remove("border-red-500");
-      correo.classList.add("border-green-500", "border-4");
+      correo.classList.add("border-green-500", "border-2");
     }
   }
 
@@ -105,38 +107,70 @@ let enviar =  async (event) => {
   if (numeroDoc.value.trim() === '') {
     console.log("El numero de documento es obligatorio");
     numeroDoc.classList.remove("border-green-500");
-    numeroDoc.classList.add("border-red-500", "border-4");
+    numeroDoc.classList.add("border-red-500", "border-2");
+    numeroDoc.insertAdjacentElement("afterend", crearSpans("El numero de documento es obligatorio"));
     formValido = false;
   }
   else{
-    numeroDoc.classList.remove("border-red-500");
-    numeroDoc.classList.add("border-green-500", "border-4");
+    if (/[0-9]{6,10}/.test(numeroDoc.value)) {
+      numeroDoc.classList.remove("border-red-500");
+      numeroDoc.classList.add("border-green-500", "border-2");
+    }
+    else {
+      console.log("El numero de documento debe que tener minimo 6 caraxteres");
+      numeroDoc.classList.remove("border-green-500");
+      numeroDoc.classList.add("border-red-500", "border-2");
+      numeroDoc.insertAdjacentElement("afterend", crearSpans("debe tener minimo 6 caracteres y maximo 10"));
+      formValido = false;
+    }
   }
 
   // Validacion de la direccion si no esta vacio
   if (direccion.value.trim() === '') {
     console.log("La direccion es obligatoria");
     direccion.classList.remove("border-green-500");
-    direccion.classList.add("border-red-500", "border-4");
+    direccion.classList.add("border-red-500", "border-2");
+    direccion.insertAdjacentElement("afterend", crearSpans("la direccion es obligatoria"));
     formValido = false;
   }
   else{
     direccion.classList.remove("border-red-500");
-    direccion.classList.add("border-green-500", "border-4");
+    direccion.classList.add("border-green-500", "border-2");
   }
 
   // Validacion del select que no sea un tipo de documento por defecto
   if (select.value.replace(/\s+/g, '').toLowerCase() === "seleccionesutipodedocumento") {
     console.log("Seleccione su tipo de documento es obligatorio");
     select.classList.remove("border-green-500");
-    select.classList.add("border-red-500", "border-4");
+    select.classList.add("border-red-500", "border-2");
+    select.insertAdjacentElement("afterend", crearSpans("El tipo de documento es obligatorio"));
     formValido = false;
   }
   else{
     select.classList.remove("border-red-500");
-    select.classList.add("border-green-500", "border-4");
+    select.classList.add("border-green-500", "border-2");
   }
 
+  if (telefono.value.trim() === '') {
+    console.log("Ingrese su numero telefonico");
+    telefono.classList.remove("border-greeb-500", "border-2");
+    telefono.classList.add("border-red-500", "border-2");
+    telefono.insertAdjacentElement("afterend", crearSpans("El numero de telefono es obligatorio"));
+    formValido = false;
+  }
+  else {
+    if (/[0-9]{10}/.test(telefono.value)) {
+      telefono.classList.remove("border-red-500", "border-2");
+      telefono.classList.add("border-green-500", "border-2");
+    }
+    else {
+      console.log("Se deben ingresar 10 numeros al telefono");
+      telefono.classList.remove("border-greeb-500", "border-2");
+      telefono.classList.add("border-red-500", "border-2");
+      telefono.insertAdjacentElement("afterend", crearSpans("El telefono debe tener 10 digitos"));
+      formValido = false;
+    }
+  }
   // Verificacion si todos los campos tienen valor
   if (!formValido) {
     console.error("No se mando el formulario");
@@ -147,12 +181,12 @@ let enviar =  async (event) => {
     console.log("Se mando el formulario");
 
     // Remover todas las clases para nuevo envio
-    name.classList.remove("border-green-500", "border-4");
-    apellido.classList.remove("border-green-500", "border-4");
-    direccion.classList.remove("border-green-500", "border-4");
-    numeroDoc.classList.remove("border-green-500", "border-4");
-    select.classList.remove("border-green-500", "border-4");
-    correo.classList.remove("border-green-500", "border-4");
+    name.classList.remove("border-green-500", "border-2");
+    apellido.classList.remove("border-green-500", "border-2");
+    direccion.classList.remove("border-green-500", "border-2");
+    numeroDoc.classList.remove("border-green-500", "border-2");
+    select.classList.remove("border-green-500", "border-2");
+    correo.classList.remove("border-green-500", "border-2");
 
     // Enviar el usuario que se esta seteando
     
@@ -164,7 +198,8 @@ let enviar =  async (event) => {
         documento: parseInt(numeroDoc.value),
         tipo_documento: select.value,
         correo: correo.value,
-        direccion: direccion.value
+        direccion: direccion.value,
+        telefono: telefono.value
       }
       // --------------------------------------
       
@@ -201,6 +236,7 @@ let enviar =  async (event) => {
       correo.value = "";
       direccion.value = "";
       select.value = "";
+      telefono.value = "";
     }
     else{
       modificar();
@@ -226,7 +262,8 @@ function modificar(event){
       documento: parseInt(numeroDoc.value),
       tipo_documento: select.value,
       correo: correo.value,
-      direccion: direccion.value
+      direccion: direccion.value,
+      telefono: telefono.value
   }
 
   fetch(`http://localhost:3000/users/${identificador.value}`, {
@@ -257,6 +294,7 @@ function modificarUser(id){
       correo.value = user.correo;
       direccion.value = user.direccion;
       select.value = user.tipo_documento;
+      telefono.value = user.telefono;
       identificador.value = id;
       btnForm.innerText = "Modificar usuario";
     })
@@ -276,6 +314,7 @@ persona()
     let td5 = document.createElement("td");
     let td6 = document.createElement("td");
     let td7 = document.createElement("td");
+    let td8 = document.createElement("td");
     let btn = document.createElement("button");
     let btnModify = document.createElement("button");
     td.textContent = u.id;
@@ -285,6 +324,7 @@ persona()
     td4.textContent = u.tipo_documento;
     td5.textContent = u.correo;
     td6.textContent = u.direccion;
+    td8.textContent = u.telefono;
 
     btnModify.textContent = "Modificar";
     btnModify.classList.add("btnModificar");
@@ -307,6 +347,7 @@ persona()
     tr.appendChild(td4);
     tr.appendChild(td5);
     tr.appendChild(td6);
+    tr.appendChild(td8);
     tr.appendChild(td7);
     fragementoTable.appendChild(tr);
   })
@@ -333,11 +374,13 @@ function addEventModify(){
   }
 
 // TODO --- Eventos para manejar el DOM
-name.addEventListener("keydown", validar); // Evento para validar que se ingresen letras y no numeros
-apellido.addEventListener("keydown", validar); // Evento para validar que se ingresen letras y no numeros
-correo.addEventListener("keydown", validar); 
-numeroDoc.addEventListener("keydown", validar); // Evento para validar que se ingresen numeros y no letras
-direccion.addEventListener("keydown", validar);
-
 formulario.addEventListener("submit", enviar); // Evento para validar el formulario
 mostrarUser.addEventListener("click", mostrar); // Evento click para el boton para que muestre la tabla de usuarios
+check.addEventListener("click", checkeado);
+
+name.addEventListener("blur", (event) => {
+  console.log(event)
+  if (!/[A-Za-zàáâãéêíóôõúüñÑ\s]/.test(event)) {
+      event.preventDefault();
+  }
+})

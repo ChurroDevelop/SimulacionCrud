@@ -12,8 +12,16 @@ export const persona = async () => {
   return response;
 }
 
+// Funcion para eliminar el usuario
 export const eliminarUser = (id) => {
   fetch(`http://localhost:3000/users/${id}`, {
     method: 'DELETE',
   });
+}
+
+export const crearSpans = (mensaje) => {
+  let span = document.createElement("span");
+  span.innerText = mensaje;
+  span.classList.add("text-xs", "text-red-500");
+  return span;
 }

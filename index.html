@@ -24,21 +24,28 @@
         </div>
         <div class="w-full flex flex-col gap-2">
           <form class="flex flex-col gap-2 w-full items-center justify-center" id="formulario">
-            <div class="flex flex-col gap-2 w-full">
+            <div class="flex flex-col gap-2 w-full" id="coleccion">
               <input type="hidden" id="identificador">
               <input type="text" id="nombre" placeholder="Ingrese su nombre" class="input input-bordered w-full bg-meInputs text-black" />
               <input type="text" id="apellido" placeholder="Ingrese su apellido" class="input input-bordered w-full bg-meInputs text-black" />
               <input type="text" id="numeroDoc" placeholder="Ingrese su numero de documento" class="input input-bordered w-full bg-meInputs text-black" />
               <input type="text" id="correo" placeholder="Ingrese su correo electronico" class="input input-bordered w-full bg-meInputs text-black" />
               <input type="text" id="direccion" placeholder="Ingrese su direccion" class="input input-bordered w-full bg-meInputs text-black" />
+              <input type="text" id="telefono" placeholder="Ingrese su telefono" class="input input-bordered w-full bg-meInputs text-black" />
             </div>
-            <div class="flex w-full">
+            <div class="flex flex-col gap-2 w-full">
               <select name="" class="select w-full bg-meInputs" id="select" required>
                 <option disabled selected>Seleccione su tipo de documento</option>
               </select>
             </div>
             <div class="w-full flex">
-              <button type="submit" class="btn bg-meInputs btn-sm text-black border-none hover:text-meWhite w-full" id="btnForm">
+              <label class="label cursor-pointer flex justify-around w-full">
+                <span class="label-text text-sm">Aceptar politicas y condiciones</span>
+                <input type="checkbox" class="checkbox checkbox-sm" id="check"/>
+              </label>
+            </div>
+            <div class="w-full flex">
+              <button disabled type="submit" class="btn bg-meInputs btn-sm text-black border-none hover:text-meWhite w-full" id="btnForm">
                 Enviar datos al servidor
               </button>
             </div>
@@ -62,6 +69,7 @@
                 <th>Tipo de documento</th>
                 <th>Correo Electronico</th>
                 <th>Direccion</th>
+                <th>Telefono</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -73,5 +81,6 @@
     </section>
   </main>
   <script src="src/scripts/app.js" type="module"></script>
+  <script src="src/scripts/teclado.js"></script>
 </body>
 </html>

@@ -1,33 +1,17 @@
 {
   "users": [
     {
-      "id": "21",
-      "nombre": "Cacharrita",
-      "apellido": "Pinto",
+      "id": "51",
+      "nombre": "Churro",
+      "apellido": "Carreño Pinto",
       "documento": 1099737501,
-      "tipo_documento": "Cédula de extranjería",
-      "correo": "kfdmk@",
-      "direccion": "fjidfkd"
-    },
-    {
-      "id": "45",
-      "nombre": "Cacharrita",
-      "apellido": "Gomez",
-      "documento": 1099737501,
-      "tipo_documento": "Cédula de extranjería",
-      "correo": "jfkdj@gmail.com",
-      "direccion": "eeeeeeeeeeee"
-    },
-    {
-      "id": "25",
-      "nombre": "Cacharrita",
-      "apellido": "Gomez",
-      "documento": 1099737501,
-      "tipo_documento": "Tarjeta de identidad",
-      "correo": "kfdmk@",
-      "direccion": "fdfd"
+      "tipo_documento": "Cédula de ciudadanía",
+      "correo": "jhonfredy2325@gmail.com",
+      "direccion": "cra a",
+      "telefono": "3186040819"
     }
   ],
+
   "docs": [
     {
       "id": "1",
